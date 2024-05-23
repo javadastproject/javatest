@@ -179,7 +179,7 @@ public class AuthenFilter implements Filter {
         } else {
             try {
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                t.printStackTrace(ps);
+                t.printStackTrace();
                 ps.close();
                 response.getOutputStream().close();
             } catch (Exception ex) {
