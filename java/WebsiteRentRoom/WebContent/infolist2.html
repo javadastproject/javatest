@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="administrator/css/adminprofile.css" />
+<title>Administration profile user</title>
+</head>
+<body>
+
+	<nav>
+	<img style="margin:7px;" align="left" src="administrator/images/image (2).png" alt="Smiley face" width="42" height="42">
+	<a  href="Welcome_page.html" style="float: right; margin: 7.99px; color:red;">Log out </a>
+		<div class="container">
+			<div class="admenu">
+				<ul>
+					<li><a href="useradminprofile2"> User info </a></li>
+					<li><a href="infolist2.html"> Change user info </a></li>
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="index">
+		<h2 class="containindex">Administration profile user</h2>
+
+
+		<div class="prf">
+			<form action="infouser2">
+			    <label for="uname">User name </label> <input type="text" id="uname" 
+				   name="username" placeholder="Your username..">
+				   <label for="fname">First Name</label> <input type="text" id="fname"
+					name="firstname" placeholder="Your name.."> <label
+					for="lname">Name</label> <input type="text" id="lname"
+					name="lastname" placeholder="Your last name.."> <label
+					for="pass">Password</label> <input type="text" id="pass"
+					name="password" placeholder="Your password.."> <label
+					for="email">Email</label> <input type="text" id="email"
+					name="email" placeholder="Your email.."> <label
+					for="telephone">Telephone</label> <input type="text" id="telephone"
+					name="telephone" placeholder="Your telephone.."> <label
+					for="image">Image</label> <input type="file" id="files"
+					name="files[]" multiple>
+				<output id="list"></output>
+				<script>
+				function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                  '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+  </script>
+                <input type="submit" value="Submit">
+			</form>
+		</div>
+
+	</div>  
+
+</body>
+</html>
