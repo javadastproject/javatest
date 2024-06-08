@@ -37,7 +37,9 @@ public class EntityManagerInterceptor implements Filter {
 		{
 			EntityTransaction tx = EntityManagerHelper.getTransaction();
 			if (tx != null && tx.isActive()) 
-				EntityManagerHelper.rollback();
+				{
+				    EntityManagerHelper.rollback();
+				}
 		    throw e;
 			
 		} 
