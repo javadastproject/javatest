@@ -41,12 +41,11 @@ public class AddCategoryServlet1 extends HttpServlet {
                     EntityManagerFactory emf
                             = Persistence.createEntityManagerFactory("com.mycompany_WebProject_war_1.0-SNAPSHOTPU");
                     EntityManager em = emf.createEntityManager(); 
-                    String category = request.getParameter("category");
                     if (emf == null || em == null){
                         return;
                     }
                     em.getTransaction().begin();
-                    em.createNativeQuery("insert into category (category) values ('"+category+"')").executeUpdate();
+                    em.createNativeQuery("insert into category (category) values (:parameter0"+")").setParameter(":parameter0", request.getParameter("category")).executeUpdate();
                     em.getTransaction().commit();
                     em.close();
                     request.setAttribute("message", "Add Category successfully");

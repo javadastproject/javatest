@@ -59,10 +59,9 @@ public class AddCategoryServlet9 extends HttpServlet {
             for (int i = 0; i < byteArray.length; i++){
                 charArray[i] = (char) byteArray[i];
             }
-            String newCategory = new String(charArray);
 
             em.getTransaction().begin();
-            em.createNativeQuery("insert into category (category) values ('"+newCategory+"')").executeUpdate();
+            em.createNativeQuery("insert into category (category) values (:parameter0"+")").setParameter(":parameter0", new String(charArray)).executeUpdate();
             em.getTransaction().commit();
             em.close();
             request.setAttribute("message", "Add Category successfully");

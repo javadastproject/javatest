@@ -38,7 +38,6 @@ public class OrderdetailadminServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String orderid = request.getParameter("orderid");
         EntityManagerFactory emf
                 = Persistence.createEntityManagerFactory("com.mycompany_WebProject_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager();
@@ -49,8 +48,8 @@ public class OrderdetailadminServlet extends HttpServlet {
             request.getRequestDispatcher("/AdminLogin.jsp").forward(request, response);
         }
         
-        String sql = "select o from Orderdetail o where o.orderid.orderid like '"+orderid+"'";
-        Query qry = em.createQuery(sql);
+        String sql = "select o from Orderdetail o where o.orderid.orderid like :parameter0";
+        Query qry = em.createQuery(sql).setParameter(":parameter0", request.getParameter("orderid"));
 
         List <Orderdetail> orderdetail = qry.getResultList();
         System.out.println(sql);

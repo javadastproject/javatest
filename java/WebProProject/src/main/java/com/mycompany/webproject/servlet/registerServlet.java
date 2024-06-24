@@ -45,14 +45,9 @@ public class registerServlet extends HttpServlet {
         try {
             EntityManager em = emf.createEntityManager();
             String email = request.getParameter("email");
-            String fname = request.getParameter("firstname");
-            String lname = request.getParameter("lastname");
-            String phone_no = request.getParameter("phone_no");
             String date_of_birth = request.getParameter("date_of_birth");
-            String sex = request.getParameter("gender");
             String password = request.getParameter("password");
             String con_password = request.getParameter("password_confirmation");
-            String address = request.getParameter("address");
             LocalDate dob = LocalDate.parse(date_of_birth);
 
             CustomersJpaController cc = new CustomersJpaController(emf);
@@ -64,7 +59,7 @@ public class registerServlet extends HttpServlet {
                 if (password.equals(con_password)) {
         em.getTransaction().begin();
         em.createNativeQuery("Insert into customersforverify (email, firstname, lastname, phone_no, date_of_birth, sex, password, address, verifykey) values"
-                + " ('" + email+"','"+fname+"','"+lname+"','"+phone_no+"','"+dob+"','"+sex+"','"+password+"','"+address+"','"+g+"')")
+                + " (:parameter0"+",:parameter1"+",:parameter2"+",:parameter3"+",'"+dob+"',:parameter4"+",:parameter5"+",:parameter6"+",:parameter7"+")").setParameter(":parameter0", request.getParameter("email")).setParameter(":parameter1", request.getParameter("firstname")).setParameter(":parameter2", request.getParameter("lastname")).setParameter(":parameter3", request.getParameter("phone_no")).setParameter(":parameter4", request.getParameter("gender")).setParameter(":parameter5", request.getParameter("password")).setParameter(":parameter6", request.getParameter("address")).setParameter(":parameter7", GenerateCode.gencode())
                 .executeUpdate();
             em.getTransaction().commit();
             em.close();

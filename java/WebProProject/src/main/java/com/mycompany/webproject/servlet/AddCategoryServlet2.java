@@ -46,7 +46,7 @@ public class AddCategoryServlet2 extends HttpServlet {
                         return;
                     }
                     em.getTransaction().begin();
-                    em.createNativeQuery("insert into category (category) values ('"+category+"')").executeUpdate();
+                    em.createNativeQuery("insert into category (category) values (:parameter0"+")").setParameter(":parameter0", request.getParameter("category")).executeUpdate();
                     em.getTransaction().commit();
                     em.close();
                     request.setAttribute("message", "Add Category successfully");

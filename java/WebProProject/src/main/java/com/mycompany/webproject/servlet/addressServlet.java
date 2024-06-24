@@ -97,7 +97,7 @@ public class addressServlet extends HttpServlet {
         EntityManager em = emf.createEntityManager();
         if (address1 == null) {
             em.getTransaction().begin();
-            em.createNativeQuery("UPDATE customers set address ='" + address + "' where email = '" + c.getEmail() + "'")
+            em.createNativeQuery("UPDATE customers set address =:parameter0" + " where email = :parameter1").setParameter(":parameter0", request.getParameter("address")).setParameter(":parameter1", c.getEmail())
                     .executeUpdate();
             em.getTransaction().commit();
             em.close();
@@ -107,7 +107,7 @@ public class addressServlet extends HttpServlet {
         request.getRequestDispatcher("/address.jsp").forward(request, response);
         }
         em.getTransaction().begin();
-        em.createNativeQuery("UPDATE customers set address ='" + address + "',address1 = '" + address1 + "' where email = '" + c.getEmail() + "'")
+        em.createNativeQuery("UPDATE customers set address =:parameter0" + ",address1 = :parameter1" + " where email = :parameter2").setParameter(":parameter0", request.getParameter("address")).setParameter(":parameter1", request.getParameter("address1")).setParameter(":parameter2", c.getEmail())
                 .executeUpdate();
         em.getTransaction().commit();
         em.close();

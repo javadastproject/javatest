@@ -49,7 +49,7 @@ public class info2 extends HttpServlet {
 			    Persistence.createEntityManagerFactory("Airbnb2");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-	    em.createNativeQuery("UPDATE Manager nte SET nte.username = '"+uname+"', nte.`first name`= '"+fname+"', nte.email='"+eml+"', nte.telephone='"+tel+"', nte.`last name`='"+lname+"', nte.password='"+passwd+"'").executeUpdate();
+	    em.createNativeQuery("UPDATE Manager nte SET nte.username = :parameter0"+", nte.`first name`= :parameter1"+", nte.email=:parameter2"+", nte.telephone=:parameter3"+", nte.`last name`=:parameter4"+", nte.password=:parameter5").setParameter(":parameter0", request.getParameter("username")).setParameter(":parameter1", request.getParameter("firstname")).setParameter(":parameter2", request.getParameter("email")).setParameter(":parameter3", request.getParameter("telephone")).setParameter(":parameter4", request.getParameter("lastname")).setParameter(":parameter5", request.getParameter("password")).executeUpdate();
 	    em.getTransaction().commit();
 		
 			

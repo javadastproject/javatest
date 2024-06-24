@@ -49,7 +49,7 @@ public class Houses_host extends HttpServlet {
 		request.setAttribute("pagenumber2", pagenumber2);
 		number = Integer.parseInt(house_number);
 		request.setAttribute("number", number);
-		TypedQuery<House> query = em.createQuery("SELECT h FROM House AS h WHERE h.username_host = '" +Sign_in.host.getUsername()+ "'", House.class);
+		TypedQuery<House> query = em.createQuery("SELECT h FROM House AS h WHERE h.username_host = :parameter0", House.class).setParameter(":parameter0", Sign_in.host.getUsername());
 		list = query.getResultList();
 		Sign_in.host.setHouses(list);
 		request.setAttribute("filepath", Sign_in.host.getFilepath());

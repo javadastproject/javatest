@@ -45,8 +45,8 @@ public class DeleteCategoryServlet extends HttpServlet {
             request.getRequestDispatcher("/message.jsp").forward(request, response);
         }
         em.getTransaction().begin();
-        String sql = "delete from Category where category like '"+category+"'";
-        em.createNativeQuery(sql).executeUpdate();
+        String sql = "delete from Category where category like :parameter0";
+        em.createNativeQuery(sql).setParameter(":parameter0", request.getParameter("category")).executeUpdate();
         em.getTransaction().commit();
         em.close();
         request.setAttribute("message", "Delete category success");
