@@ -7,6 +7,6 @@
 <title>Message</title>
 </head>
 <body>
-	Congratulations <%=request.getParameter("username") %>. You signed up in application.
+	Congratulations <%=org.owasp.encoder.Encode.forHtml(request.getParameter("username") )%>. You signed up in application.
 </body>
 </html>
