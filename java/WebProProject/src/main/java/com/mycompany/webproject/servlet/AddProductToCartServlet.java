@@ -7,6 +7,7 @@ package com.mycompany.webproject.servlet;
 
 import com.mycompany.webproject.entity.Product;
 import com.mycompany.webproject.model.Cart;
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -58,7 +59,7 @@ public class AddProductToCartServlet extends HttpServlet {
             cart.add(c, p, quantity, size, p.getCategory());
             
         }
-        request.getRequestDispatcher("ProductDetail?productId="+productId).forward(request, response);
+        request.getRequestDispatcher(validateDispatcherPath("ProductDetail?productId="+productId)).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
