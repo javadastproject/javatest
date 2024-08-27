@@ -59,9 +59,11 @@ public class LoginServlet extends HttpServlet {
                     Cookie ck2 = new Cookie("ck2_pass", password);
                     ck1.setMaxAge(60 * 60 * 24 * 7);
                     ck2.setMaxAge(60 * 60 * 24 * 7);
+                    ck1.setSecure(true);
                     response.addCookie(ck1);
+                    ck2.setSecure(true);
                     response.addCookie(ck2);
-                }
+                                }
                 request.getRequestDispatcher("ProductList").forward(request, response);
             } else {
                 request.setAttribute("message", "Invalid User Email  or password");
