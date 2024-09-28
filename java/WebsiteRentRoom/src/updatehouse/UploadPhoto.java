@@ -53,10 +53,8 @@ public class UploadPhoto extends HttpServlet {
 			    Persistence.createEntityManagerFactory("Airbnb2");
 		EntityManager em = emf.createEntityManager();
 		java.text.DateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
-		String date1 = formatter.format(Houses_host.list.get(Houses_host.number - 1).getId().getFirst_date());
-		String date2 = formatter.format(Houses_host.list.get(Houses_host.number - 1).getId().getLast_date());
 		em.getTransaction().begin();
-		Query query = em.createNativeQuery("UPDATE House h SET h.filepaths = '"+filepaths2+"' WHERE h.location='"+Houses_host.list.get(Houses_host.number - 1).getId().getLocation()+"' AND h.`first date`='"+date1+"' AND h.`last date`='"+date2+"' AND h.`max number of persons`='"+Houses_host.list.get(Houses_host.number - 1).getId().getMax_number_of_persons()+"' AND h.`min value of tenancy`='"+Houses_host.list.get(Houses_host.number - 1).getId().getMin_value_of_tenancy()+"'");
+		Query query = em.createNativeQuery("UPDATE House h SET h.filepaths = :parameter0"+" WHERE h.location=:parameter1"+" AND h.`first date`=:parameter2"+" AND h.`last date`=:parameter3"+" AND h.`max number of persons`=:parameter4"+" AND h.`min value of tenancy`=:parameter5").setParameter(":parameter0", filepaths2).setParameter(":parameter1", Houses_host.list.get(Houses_host.number - 1).getId().getLocation()).setParameter(":parameter2", formatter.format(Houses_host.list.get(Houses_host.number - 1).getId().getFirst_date())).setParameter(":parameter3", formatter.format(Houses_host.list.get(Houses_host.number - 1).getId().getLast_date())).setParameter(":parameter4", Houses_host.list.get(Houses_host.number - 1).getId().getMax_number_of_persons()).setParameter(":parameter5", Houses_host.list.get(Houses_host.number - 1).getId().getMin_value_of_tenancy());
 		query.executeUpdate();
 		House house = em.find(House.class, Houses_host.list.get(Houses_host.number - 1).getId());
 		house.setFilepaths(filepaths2);

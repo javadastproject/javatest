@@ -59,9 +59,9 @@ public class ActivateServlet extends HttpServlet {
         if(cus!=null&&verifykey.equals(cus.getVerifykey())){            
             em.getTransaction().begin();
         em.createNativeQuery("Insert into customers (email, firstname, lastname, phone_no, date_of_birth, sex, password, address)" 
-                + "select email, firstname, lastname, phone_no, date_of_birth, sex, password, address from customersforverify where email like '"+email+"' and verifykey like '"+verifykey+"'; " )
+                + "select email, firstname, lastname, phone_no, date_of_birth, sex, password, address from customersforverify where email like :parameter0"+" and verifykey like :parameter1"+"; " ).setParameter(":parameter0", request.getParameter("email")).setParameter(":parameter1", AES.decrypt(key))
                 .executeUpdate();
-        em.createNativeQuery("DELETE FROM customersforverify WHERE email like '"+email+"' and verifykey like '"+verifykey+"';")        
+        em.createNativeQuery("DELETE FROM customersforverify WHERE email like :parameter0"+" and verifykey like :parameter1"+";").setParameter(":parameter0", request.getParameter("email")).setParameter(":parameter1", AES.decrypt(key))        
                 .executeUpdate();
             em.getTransaction().commit();
             em.close();

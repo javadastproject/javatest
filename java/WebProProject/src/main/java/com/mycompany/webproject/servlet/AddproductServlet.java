@@ -55,7 +55,7 @@ public class AddproductServlet extends HttpServlet {
 
         em.getTransaction().begin();
         System.out.println(pdid + ", " + name + ", " + price + ", " + category + ", " + des);
-        em.createNativeQuery("insert into product (product_id, name, price, category,productdescription) values ('" + pdid + "','" + name + "','" + price + "','"+ category + "','" + des + "'" + ")").executeUpdate();
+        em.createNativeQuery("insert into product (product_id, name, price, category,productdescription) values (:parameter0" + ",:parameter1" + ",:parameter2" + ",:parameter3" + ",:parameter4" + ")").setParameter(":parameter0", request.getParameter("productid")).setParameter(":parameter1", request.getParameter("productname")).setParameter(":parameter2", request.getParameter("price")).setParameter(":parameter3", request.getParameter("category")).setParameter(":parameter4", request.getParameter("des")).executeUpdate();
         em.getTransaction().commit();
         em.close();
         session.setAttribute("pdid", pdid);

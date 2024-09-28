@@ -43,8 +43,6 @@ public class AddOrderServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String firstname = request.getParameter("firstname");
-        String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         String discountId = request.getParameter("hidcode");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_WebProject_war_1.0-SNAPSHOTPU");
@@ -81,10 +79,10 @@ public class AddOrderServlet extends HttpServlet {
         
         em.getTransaction().begin();
         
-        em.createNativeQuery("INSERT INTO orders (orderid, email, created, discountId, amount, address) values ('"+orderid+"', '"+c.getEmail()+"', '"+now+"','"+discountId+"', "+cart.getTotalWithpayment()+",'"+firstname+" "+phone+" "+address+"')").executeUpdate();
+        em.createNativeQuery("INSERT INTO orders (orderid, email, created, discountId, amount, address) values (:parameter0"+", :parameter1"+", '"+now+"',:parameter2"+", "+cart.getTotalWithpayment()+",:parameter3"+")").setParameter(":parameter0", GenerateCode.genorderid()).setParameter(":parameter1", c.getEmail()).setParameter(":parameter2", request.getParameter("hidcode")).setParameter(":parameter3", request.getParameter("firstname") + " " + request.getParameter("phone") + " " + request.getParameter("address")).executeUpdate();
         
         for (LineItem order : cart.getItems()) {
-            em.createNativeQuery("INSERT INTO orderdetail (orderdetailid, orderid, product_id, size, price, quantity) VALUE ('"+orderid+order.getCartid()+"','"+orderid+"','"+order.getProduct().getProductId()+"','"+order.getSize()+"','"+order.getProduct().getPrice()+"','"+order.getQuantity()+"')").executeUpdate();
+            em.createNativeQuery("INSERT INTO orderdetail (orderdetailid, orderid, product_id, size, price, quantity) VALUE (:parameter0"+orderid+",:parameter1"+",:parameter2"+",:parameter3"+",'"+order.getProduct().getPrice()+"','"+order.getQuantity()+"')").setParameter(":parameter0", GenerateCode.genorderid() + order.getCartid()).setParameter(":parameter1", GenerateCode.genorderid()).setParameter(":parameter2", order.getProduct().getProductId()).setParameter(":parameter3", order.getSize()).executeUpdate();
         }
         em.getTransaction().commit();
         em.close();

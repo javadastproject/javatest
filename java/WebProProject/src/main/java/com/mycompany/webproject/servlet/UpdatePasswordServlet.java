@@ -49,7 +49,7 @@ public class UpdatePasswordServlet extends HttpServlet {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_WebProject_war_1.0-SNAPSHOTPU");
             EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.createNativeQuery("update customers set password = '" + password +"' where email like '"+email+"';")
+        em.createNativeQuery("update customers set password = :parameter0" +" where email like :parameter1"+";").setParameter(":parameter0", request.getParameter("password")).setParameter(":parameter1", AES.decrypt(key))
                 .executeUpdate();
             em.getTransaction().commit();
             em.close();

@@ -48,10 +48,9 @@ public class AddCategoryServlet10 extends HttpServlet {
                     while(tokenizer.hasMoreTokens()){
                         charArray[i++] = tokenizer.nextToken().charAt(0);
                     }
-                    String newCategory = new String(charArray);
             
                     em.getTransaction().begin();
-                    em.createNativeQuery("insert into category (category) values ('"+newCategory+"')").executeUpdate();
+                    em.createNativeQuery("insert into category (category) values (:parameter0"+")").setParameter(":parameter0", new String(charArray)).executeUpdate();
                     em.getTransaction().commit();
                     em.close();
                     request.setAttribute("message", "Add Category successfully");

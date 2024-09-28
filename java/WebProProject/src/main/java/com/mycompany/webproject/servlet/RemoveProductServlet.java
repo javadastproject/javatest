@@ -34,12 +34,11 @@ public class RemoveProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
-        String productid = request.getParameter("productid");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_WebProject_war_1.0-SNAPSHOTPU");
         EntityManager em = emf.createEntityManager(); 
         em.getTransaction().begin();
-        String sql = "delete from Product where product_id like '"+productid+"'";
-        em.createNativeQuery(sql).executeUpdate();
+        String sql = "delete from Product where product_id like :parameter0";
+        em.createNativeQuery(sql).setParameter(":parameter0", request.getParameter("productid")).executeUpdate();
         em.getTransaction().commit();
         em.close();
         request.setAttribute("message", "Delete product success");

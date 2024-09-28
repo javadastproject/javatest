@@ -36,8 +36,6 @@ public class Conversations_tenant extends HttpServlet {
 			    Persistence.createEntityManagerFactory("Airbnb2");
 		EntityManager em = emf.createEntityManager();
 		java.text.DateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
-		String date1 = formatter.format(Search_tenant.list1.get(Search_tenant.number - 1).getId().getFirst_date());
-		String date2 = formatter.format(Search_tenant.list1.get(Search_tenant.number - 1).getId().getLast_date());
 		if (!Search_tenant.list1.get(Search_tenant.number - 1).getMessages().isEmpty() && !Search_tenant.list1.get(Search_tenant.number - 1).getMessages().equals(" ")) {
 			String line = "/";
 			messages = Search_tenant.list1.get(Search_tenant.number - 1).getMessages().concat(line);
@@ -47,7 +45,7 @@ public class Conversations_tenant extends HttpServlet {
 			messages = text;
 		}
 		em.getTransaction().begin();
-		Query query = em.createNativeQuery("UPDATE House h SET h.messages = '"+messages+"' WHERE h.location='"+Search_tenant.list1.get(Search_tenant.number - 1).getId().getLocation()+"' AND h.`first date`='"+date1+"' AND h.`last date`='"+date2+"' AND h.`max number of persons`='"+Search_tenant.list1.get(Search_tenant.number - 1).getId().getMax_number_of_persons()+"' AND h.`min value of tenancy`='"+Search_tenant.list1.get(Search_tenant.number - 1).getId().getMin_value_of_tenancy()+"'");
+		Query query = em.createNativeQuery("UPDATE House h SET h.messages = :parameter0"+" WHERE h.location=:parameter1"+" AND h.`first date`=:parameter2"+" AND h.`last date`=:parameter3"+" AND h.`max number of persons`=:parameter4"+" AND h.`min value of tenancy`=:parameter5").setParameter(":parameter0", messages).setParameter(":parameter1", Search_tenant.list1.get(Search_tenant.number - 1).getId().getLocation()).setParameter(":parameter2", formatter.format(Search_tenant.list1.get(Search_tenant.number - 1).getId().getFirst_date())).setParameter(":parameter3", formatter.format(Search_tenant.list1.get(Search_tenant.number - 1).getId().getLast_date())).setParameter(":parameter4", Search_tenant.list1.get(Search_tenant.number - 1).getId().getMax_number_of_persons()).setParameter(":parameter5", Search_tenant.list1.get(Search_tenant.number - 1).getId().getMin_value_of_tenancy());
 		query.executeUpdate();
 		House house = em.find(House.class, Search_tenant.list1.get(Search_tenant.number - 1).getId());
 		house.setMessages(messages);

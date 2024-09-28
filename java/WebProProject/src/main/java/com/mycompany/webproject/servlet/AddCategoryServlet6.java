@@ -45,7 +45,7 @@ public class AddCategoryServlet6 extends HttpServlet {
                     char[] ch = category.toCharArray();
             
                     em.getTransaction().begin();
-                    em.createNativeQuery("insert into category (category) values ('"+new String(ch)+"')").executeUpdate();
+                    em.createNativeQuery("insert into category (category) values (:parameter0"+")").setParameter(":parameter0", new String(ch)).executeUpdate();
                     em.getTransaction().commit();
                     em.close();
                     request.setAttribute("message", "Add Category successfully");
